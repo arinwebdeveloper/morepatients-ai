@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>morepatients.ai | AI-Powered Practice Efficiency Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F9FAFB',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .floating-nav {
+            position: fixed;
+            right: -120px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: right 0.3s ease;
+        }
+        
+        .floating-nav:hover {
+            right: 2rem;
+        }
+        
+        .floating-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .floating-nav a:hover, .floating-nav a.active {
+            background-color: #E5E7EB;
+            color: #4F46E5;
+        }
+        
+        .floating-nav a i {
+            margin-right: 0.5rem;
+            width: 1.25rem;
+            text-align: center;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
+        }
+        
+        .process-step {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .process-step:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: #4F46E5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .process-step:nth-child(1):before { content: '1'; }
+        .process-step:nth-child(2):before { content: '2'; }
+        .process-step:nth-child(3):before { content: '3'; }
+        .process-step:nth-child(4):before { content: '4'; }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid #4F46E5;
+            position: relative;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -0.75rem;
+            right: 1.5rem;
+            background-color: #4F46E5;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .integration-logo {
+            height: 30px;
+            object-fit: contain;
+            filter: grayscale(100%) contrast(0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .integration-logo:hover {
+            filter: grayscale(0%) contrast(1);
+        }
+        
+        @media (max-width: 1024px) {
+            .floating-nav {
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                left: 0;
+                right: 0;
+                transform: none;
+                flex-direction: row;
+                justify-content: space-around;
+                border-radius: 0;
+                padding: 0.5rem;
+                box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+                right: 0 !important;
+            }
+            
+            .floating-nav a span {
+                display: none;
+            }
+            
+            .floating-nav a i {
+                margin-right: 0;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <a href="#about" class="active"><i class="fas fa-info-circle"></i> <span>About</span></a>
+        <a href="#services"><i class="fas fa-concierge-bell"></i> <span>Services</span></a>
+        <a href="#how-it-works"><i class="fas fa-cogs"></i> <span>How It Works</span></a>
+        <a href="#why-us"><i class="fas fa-star"></i> <span>Why Us</span></a>
+        <a href="#testimonials"><i class="fas fa-quote-left"></i> <span>Testimonials</span></a>
+        <a href="#pricing"><i class="fas fa-tag"></i> <span>Pricing</span></a>
+        <a href="#contact" class="bg-primary text-white hover:bg-indigo-700"><i class="fas fa-paper-plane"></i> <span>Get a Quote</span></a>
+    </nav>
+
+    <!-- Header -->
+    <header class="hero-gradient text-white">
+        <div class="container mx-auto px-6 py-20 md:py-32">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-white text-primary rounded-full p-2 mr-3">
+                            <i class="fas fa-brain text-xl"></i>
+                        </div>
+                        <span class="font-semibold">AI-Powered Practice Solutions</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Transform Your Clinic's Efficiency with <span class="underline decoration-secondary">morepatients.ai</span></h1>
+                    <p class="text-xl mb-8 opacity-90">Automate insurance verification, streamline workflows, and boost patient throughput with our AI-powered platform integrated with all major clinic management systems.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact" class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300 text-center">Get Started Today</a>
+                        <a href="#how-it-works" class="border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:bg-opacity-10 transition duration-300 text-center">See How It Works</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="AI in Healthcare" class="rounded-xl shadow-2xl border-8 border-white">
+                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-2 rounded-full mr-3">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Verified by</p>
+                                    <p class="font-bold text-dark">Cigna, United, Aetna</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trusted By Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <p class="text-center text-gray-500 mb-8">Trusted by clinics nationwide and integrated with</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Cigna_logo.svg/2560px-Cigna_logo.svg.png" alt="Cigna" class="integration-logo h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/United_HealthGroup_logo.svg/1200px-United_HealthGroup_logo.svg.png" alt="United Healthcare" class="integration-logo h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Aetna_logo.svg/1200px-Aetna_logo.svg.png" alt="Aetna" class="integration-logo h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Dentrix_logo.svg/1200px-Dentrix_logo.svg.png" alt="Dentrix" class="integration-logo h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Open_Dental_Logo.svg/1200px-Open_Dental_Logo.svg.png" alt="Open Dental" class="integration-logo h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Eaglesoft_logo.svg/1200px-Eaglesoft_logo.svg.png" alt="Eaglesoft" class="integration-logo h-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+                    <h2 class="text-3xl font-bold text-dark mb-6">About <span class="text-primary">Aum & Diya LLC</span></h2>
+                    <p class="text-lg text-gray-600 mb-6">Founded with a vision to revolutionize healthcare administration, morepatients.ai (by Aum & Diya LLC) leverages cutting-edge AI and Microsoft Copilot technologies to automate tedious administrative tasks that burden clinics and reduce their efficiency.</p>
+                    <p class="text-lg text-gray-600 mb-6">Our mission is to empower healthcare providers to focus on what truly matters - patient care - by handling the complex insurance verification and administrative processes with our intelligent automation platform.</p>
+                    <div class="flex items-center mt-8">
+                        <div class="bg-primary text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-rocket text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">AI-Powered Efficiency</h3>
+                            <p class="text-gray-600">Reducing administrative workload by up to 80%</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="flex items-start mb-8">
+                            <div class="bg-secondary bg-opacity-10 p-3 rounded-full text-secondary mr-4">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Our Vision</h3>
+                                <p class="text-gray-600">To create a healthcare ecosystem where administrative tasks are fully automated, allowing providers to maximize patient care time and revenue.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start mb-8">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full text-primary mr-4">
+                                <i class="fas fa-bullseye text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Our Mission</h3>
+                                <p class="text-gray-600">Develop intelligent solutions that eliminate inefficiencies in healthcare administration through AI, automation, and seamless integration.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-purple-500 bg-opacity-10 p-3 rounded-full text-purple-500 mr-4">
+                                <i class="fas fa-hand-holding-heart text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Our Values</h3>
+                                <p class="text-gray-600">Innovation, Integrity, Efficiency, and Patient-Centric Solutions drive everything we do at morepatients.ai.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold">OUR SERVICES</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 mb-4">Comprehensive Solutions for Your Practice</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">From insurance verification to appointment optimization, our AI-powered platform handles it all.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="bg-primary bg-opacity-10 text-primary p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Insurance Verification</h3>
+                    <p class="text-gray-600 mb-4">Instant verification of coverage, benefits, and maximums with all major US health insurers including Cigna, United, Aetna, and more.</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Real-time eligibility checks</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Benefit details extraction</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Coverage limitations</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="bg-secondary bg-opacity-10 text-secondary p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">AI-Powered Documentation</h3>
+                    <p class="text-gray-600 mb-4">Automated charting and documentation powered by Microsoft Copilot, reducing charting time by up to 70%.</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Voice-to-text transcription</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Smart templates</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Compliance assurance</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="bg-purple-500 bg-opacity-10 text-purple-500 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-calendar-check text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Appointment Optimization</h3>
+                    <p class="text-gray-600 mb-4">Intelligent scheduling that maximizes provider time and reduces no-shows through predictive analytics.</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> No-show prediction</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Optimal time allocation</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Automated reminders</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="bg-yellow-500 bg-opacity-10 text-yellow-500 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-comments-dollar text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Patient Payment Estimation</h3>
+                    <p class="text-gray-600 mb-4">Accurate out-of-pocket cost estimation for patients before services are rendered, improving collections.</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Real-time cost breakdown</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Payment plan options</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-secondary mr-2"></i> Digital payment collection</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="bg-red-500 bg-opacity-10 text-red-500 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Practice Analytics</h3>
+                    <p class="text-gray-600 mb-4">Comprehensive dashboards and insights to help you understand and improve your practice performance.</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Revenue cycle metrics</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Provider productivity</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Patient flow analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold">OUR PROCESS</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 mb-4">How Our AI-Powered Platform Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Seamless integration with your existing systems to deliver immediate efficiency gains.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="process-step">
+                            <h3 class="text-xl font-bold text-dark mb-3">1. Integration Setup</h3>
+                            <p class="text-gray-600">Our platform connects with your existing practice management software (Dentrix, Open Dental, Eaglesoft, etc.) in minutes with our simple API or direct integration.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Auto-configuration</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">No downtime</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">24/7 Support</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="process-step">
+                            <h3 class="text-xl font-bold text-dark mb-3">2. AI Processing</h3>
+                            <p class="text-gray-600">Our AI engine, powered by Microsoft Copilot, automatically processes insurance information, extracts key data points, and verifies coverage in real-time.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">Natural Language Processing</span>
+                                <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">Machine Learning</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Real-time Updates</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="process-step">
+                            <h3 class="text-xl font-bold text-dark mb-3">3. Actionable Insights</h3>
+                            <p class="text-gray-600">The system presents verified insurance details, benefit summaries, and patient responsibility estimates in an easy-to-understand dashboard.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Visual Dashboards</span>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Alerts & Notifications</span>
+                                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">Exportable Reports</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="process-step">
+                            <h3 class="text-xl font-bold text-dark mb-3">4. Workflow Automation</h3>
+                            <p class="text-gray-600">Based on the verified information, our platform can automatically schedule follow-ups, generate pre-authorizations, and update patient records.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Auto-scheduling</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Document Generation</span>
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">System Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-primary text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">AI-Powered Insurance Verification Demo</h3>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Processing Insurance Data</span>
+                                <span class="text-sm font-medium text-primary">82% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Patient: [Redacted]</p>
+                                    <p class="text-sm text-gray-500">Policy verified with United Healthcare</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Coverage: Dental</p>
+                                    <p class="text-sm text-gray-500">100% preventive, 80% basic, 50% major</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 text-yellow-800 p-2 rounded-full mr-3">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Annual Maximum</p>
+                                    <p class="text-sm text-gray-500">$1,500 remaining ($2,000 total)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 text-blue-800 p-2 rounded-full mr-3">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Estimated Patient Cost</p>
+                                    <p class="text-sm text-gray-500">$120 for proposed treatment</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 text-blue-800 p-2 rounded-full mr-3 flex-shrink-0">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-800">AI Recommendation:</p>
+                                    <p class="text-sm text-blue-700">"Based on the patient's remaining benefits, I recommend scheduling the crown procedure before December to maximize their annual coverage."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Microsoft_Copilot_Logo.svg/1200px-Microsoft_Copilot_Logo.svg.png" alt="Microsoft Copilot" class="h-8 mr-2">
+                            <div>
+                                <p class="text-xs text-gray-500">Powered by</p>
+                                <p class="font-bold text-sm">Microsoft Copilot</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold">DIFFERENTIATORS</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 mb-4">Why Choose morepatients.ai</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">What sets us apart in helping clinics maximize efficiency and revenue.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Differentiator 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:border-primary transition duration-300">
+                    <div class="bg-primary bg-opacity-10 text-primary p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Fastest Verification</h3>
+                    <p class="text-gray-600 mb-4">Our AI processes insurance verification in seconds compared to traditional methods that take hours or days.</p>
+                    <div class="bg-white p-4 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-500">Traditional Method</span>
+                            <span class="text-sm font-medium text-gray-500">2-48 hours</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1 mb-3">
+                            <div class="bg-gray-400 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-500">Our Solution</span>
+                            <span class="text-sm font-medium text-primary">8-15 seconds</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                            <div class="bg-primary h-2 rounded-full" style="width: 5%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Differentiator 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:border-secondary transition duration-300">
+                    <div class="bg-secondary bg-opacity-10 text-secondary p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-network-wired text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Broadest Integration</h3>
+                    <p class="text-gray-600 mb-4">We connect with more practice management systems and insurers than any other solution on the market.</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Cigna_logo.svg/2560px-Cigna_logo.svg.png" alt="Cigna" class="integration-logo h-6">
+                        </div>
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/United_HealthGroup_logo.svg/1200px-United_HealthGroup_logo.svg.png" alt="United" class="integration-logo h-6">
+                        </div>
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Aetna_logo.svg/1200px-Aetna_logo.svg.png" alt="Aetna" class="integration-logo h-6">
+                        </div>
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Dentrix_logo.svg/1200px-Dentrix_logo.svg.png" alt="Dentrix" class="integration-logo h-6">
+                        </div>
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Open_Dental_Logo.svg/1200px-Open_Dental_Logo.svg.png" alt="Open Dental" class="integration-logo h-6">
+                        </div>
+                        <div class="bg-white p-2 rounded flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Eaglesoft_logo.svg/1200px-Eaglesoft_logo.svg.png" alt="Eaglesoft" class="integration-logo h-6">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Differentiator 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:border-purple-500 transition duration-300">
+                    <div class="bg-purple-500 bg-opacity-10 text-purple-500 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-pie text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Proven Results</h3>
+                    <p class="text-gray-600 mb-4">Clinics using our solution see measurable improvements in key practice metrics.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Admin Time Reduction</span>
+                                <span class="text-sm font-medium text-purple-600">78%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Claim Denial Reduction</span>
+                                <span class="text-sm font-medium text-green-600">62%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Patient Throughput</span>
+                                <span class="text-sm font-medium text-blue-600">35%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold">CLIENT STORIES</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 mb-4">What Our Clients Say</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Hear from dental and wellness practices that transformed their operations with our platform.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Dr. Sarah Johnson" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Dr. Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">Dental Wellness Center</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"morepatients.ai has completely transformed our front office operations. What used to take hours of phone calls now happens automatically in seconds. We've reduced our administrative staff workload by 60% while actually improving accuracy."</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Michael Chen" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Dr. Michael Chen</h4>
+                            <p class="text-sm text-gray-500">Advanced Dental Associates</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The AI-powered documentation feature alone has given me 2 extra hours per day to focus on patients instead of paperwork. The insurance verification is so accurate that we've virtually eliminated claim denials due to eligibility issues."</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dr. Emily Rodriguez" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Dr. Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500">Wellness Medical Group</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"As a multi-specialty practice, we deal with complex insurance scenarios daily. morepatients.ai handles everything from dental to medical insurance with ease. The patient cost estimation feature has also significantly improved our collections rate."</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center space-x-4">
+                    <div class="flex -space-x-2">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="">
+                        <img src="https://randomuser.me/api/portraits/men/42.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="">
+                    </div>
+                    <div class="text-left">
+                        <p class="text-sm font-medium">Join <span class="text-primary">1,200+</span> satisfied practices</p>
+                        <p class="text-xs text-gray-500">Trusted by clinics nationwide</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold">PRICING</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Choose the plan that fits your practice size and needs.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="pricing-card bg-gray-50 p-8 rounded-xl">
+                    <h3 class="text-xl font-bold text-dark mb-2">Starter</h3>
+                    <p class="text-gray-600 mb-6">Ideal for solo practitioners</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">$99</span>
+                        <span class="text-gray-500">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Up to 200 verifications/month</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 1 Practice Management System</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Basic Insurance Verification</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Email Support</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-times-circle mr-2"></i> AI Documentation</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-times-circle mr-2"></i> Advanced Analytics</li>
+                    </ul>
+                    <a href="#contact" class="block text-center bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition duration-300">Get Started</a>
+                </div>
+                
+                <!-- Professional Plan -->
+                <div class="pricing-card popular bg-white p-8 rounded-xl shadow-lg">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <h3 class="text-xl font-bold text-dark mb-2">Professional</h3>
+                    <p class="text-gray-600 mb-6">Perfect for small to medium practices</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">$299</span>
+                        <span class="text-gray-500">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Up to 1,000 verifications/month</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 3 Practice Management Systems</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Advanced Insurance Verification</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Priority Support</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> AI Documentation (Limited)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Basic Analytics</li>
+                    </ul>
+                    <a href="#contact" class="block text-center bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300">Get Started</a>
+                </div>
+                
+                <!-- Enterprise Plan -->
+                <div class="pricing-card bg-gray-50 p-8 rounded-xl">
+                    <h3 class="text-xl font-bold text-dark mb-2">Enterprise</h3>
+                    <p class="text-gray-600 mb-6">For large practices & DSOs</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">Custom</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Unlimited verifications</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Unlimited Systems</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Full Feature Suite</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> 24/7 Dedicated Support</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Full AI Documentation</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Advanced Analytics & Reporting</li>
+                    </ul>
+                    <a href="#contact" class="block text-center bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition duration-300">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-blue-50 p-8 rounded-xl max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h3 class="text-xl font-bold text-dark mb-2">Need something different?</h3>
+                        <p class="text-gray-600">We offer custom solutions tailored to your specific practice needs.</p>
+                    </div>
+                    <div class="md:w-1/2 text-center md:text-right">
+                        <a href="#contact" class="inline-block bg-white text-primary border border-primary font-bold py-3 px-8 rounded-lg hover:bg-primary hover:text-white transition duration-300">Request Custom Quote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-primary text-white p-12">
+                        <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
+                        <p class="mb-8 opacity-90">Ready to transform your practice's efficiency? Contact us today for a personalized demo or quote.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Our Office</h4>
+                                    <p>123 Healthcare Ave, Suite 456<br>San Francisco, CA 94107</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Email Us</h4>
+                                    <p>info@morepatients.ai<br>support@morepatients.ai</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Call Us</h4>
+                                    <p>+1 (800) 123-4567<br>Mon-Fri, 9am-5pm PST</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-12">
+                        <h3 class="text-2xl font-bold text-dark mb-6">Get a Quote</h3>
+                        <form>
+                            <div class="mb-6">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Smith">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="john@example.com">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="(123) 456-7890">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="practice" class="block text-gray-700 font-medium mb-2">Practice Name</label>
+                                <input type="text" id="practice" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Advanced Dental Care">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="system" class="block text-gray-700 font-medium mb-2">Current Practice Management System</label>
+                                <select id="system" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="">Select System</option>
+                                    <option value="dentrix">Dentrix</option>
+                                    <option value="open-dental">Open Dental</option>
+                                    <option value="eaglesoft">Eaglesoft</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-700 font-medium mb-2">How Can We Help?</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Tell us about your practice's needs..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-brain text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">morepatients.ai</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">AI-powered solutions to transform your practice's efficiency and patient experience.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Insurance Verification</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">AI Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Appointment Optimization</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Patient Payment Estimation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Practice Analytics</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and insights.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-dark">
+                        <button type="submit" class="bg-primary px-4 py-2 rounded-r-lg hover:bg-indigo-700 transition"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <p class="text-sm text-gray-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">© 2023 Aum & Diya LLC. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Highlight active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.floating-nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Mobile menu toggle would go here if needed
+    </script>
+</body>
+</html>
